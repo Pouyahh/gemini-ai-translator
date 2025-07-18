@@ -6,11 +6,20 @@
     <title>Gemini AI Translator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      /* این بخش استایل scrollbar که قبلا اینجا بود، حالا به public/style.css منتقل شده است.*/
-      /* ::-webkit-scrollbar { ... } */
-      /* ::-webkit-scrollbar-track { ... } */
-      /* ::-webkit-scrollbar-thumb { ... } */
-      /* ::-webkit-scrollbar-thumb:hover { ... } */
+      /* Custom scrollbar styling (از public/style.css منتقل شده) */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1f2937; /* bg-gray-800 */
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #4b5563; /* bg-gray-600 */
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #6b7280; /* bg-gray-500 */
+      }
     </style>
 
     <link rel="stylesheet" href="./style.css"> 
@@ -25,7 +34,7 @@
         }
       }
     </script>
-    <script type="module" crossorigin src="/gemini-ai-translator/assets/index-DTWNDFyb.js"></script>
+    <script type="module" crossorigin src="/index-DTWNDFyb.js"></script>
   </head>
   <body class="bg-gray-900 text-white">
     <div id="root"></div>
