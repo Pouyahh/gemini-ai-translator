@@ -6,7 +6,7 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
-    // [G_REASONING] مسیر پایه (base path) برای دیپلوی به GitHub Pages اصلاح شد.
+    // [G_REASONING] مسیر پایه (base path) برای دیپلوی به GitHub Pages.
     // [G_REASONING] './' باعث می‌شود Vite مسیرهای Asset را نسبت به index.html محاسبه کند.
     base: './',
 
@@ -25,17 +25,20 @@ export default defineConfig(({ mode }) => {
       }
     },
     build: {
-      // [G_REASONING] **تنظیمات Build برای تزریق نام Asset به index.html:**
+      // [G_REASONING] **تنظیمات Build برای تزریق نام Asset به index.html (مهمترین بخش):**
       // [G_REASONING] این باعث می‌شود Vite یک فایل index.html تولید کند که به صورت خودکار به فایل‌های JS/CSS Build شده اشاره کند.
       assetsDir: 'assets', // [G_REASONING] فایل‌ها را در پوشه 'assets' داخل 'dist' قرار می‌دهد.
       rollupOptions: {
         output: {
-          // [G_REASONING] این تنظیمات اطمینان می‌دهد که Vite نام فایل‌های Build شده را در index.html تزریق می‌کند.
-          entryFileNames: `assets/[name]-[hash].js`,
-          chunkFileNames: `assets/[name]-[hash].js`,
-          assetFileNames: `assets/[name]-[hash].[ext]`,
+          // [G_REASONING] نام‌های فایل‌های Build شده را به صورت استاندارد Vite با هش تولید می‌کند
+          entryFileNames: `[name]-[hash].js`,
+          chunkFileNames: `[name]-[hash].js`,
+          assetFileNames: `[name]-[hash].[ext]`,
         },
       },
+      // [G_REASONING] **مهم:** فایل HTML را بهینه سازی کنید تا Vite خودش اسکریپت‌ها را تزریق کند
+      minify: 'terser', // [G_REASONING] یا 'esbuild'
+      emptyOutDir: true, // [G_REASONING] پوشه dist را قبل از Build پاک می‌کند
     },
   };
 });
