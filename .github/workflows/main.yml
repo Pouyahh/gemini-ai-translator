@@ -16,10 +16,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # یا نسخه‌ای که روی سیستم شما استفاده می‌شود (مثلاً 20 یا 22)
+          node-version: '20' #
 
       - name: Install dependencies 🔧
-        run: npm install
+        # npm ci برای نصب تمیزتر در CI
+        run: npm ci
+
+      # مرحله جدید: نصب صریح rollup و پکیج بومی آن برای اطمینان
+      - name: Install Rollup Native Package 🔨
+        run: npm install @rollup/rollup-linux-x64-gnu || npm install rollup
 
       - name: Build project 🏗️
         run: npm run build
@@ -28,6 +33,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # پوشه خروجی build شما
+          publish_dir: ./dist
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
