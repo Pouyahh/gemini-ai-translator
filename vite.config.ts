@@ -5,8 +5,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
-    // مطمئن شوید این خط وجود دارد و صحیح است:
-    base: '/gemini-ai-translator/', // نام مخزن شما با اسلش در ابتدا و انتها
+    // مسیر پایه (base path) برای دیپلوی به GitHub Pages اصلاح شد.
+    // این تغییر، مشکل 'Failed to resolve' در زمان Build را حل می‌کند.
+    base: './', // از '/gemini-ai-translator/' به './' تغییر یافت.
 
     plugins: [react()],
     define: {
