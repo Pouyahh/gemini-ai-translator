@@ -16,17 +16,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # از نسخه 20 (LTS) یا بالاتر استفاده کنید
+          node-version: '20' #
 
-      - name: Install dependencies 🔧
-        # از npm ci --no-optional استفاده کنید تا از باگ مربوط به optional dependencies جلوگیری شود.
-        # این شامل نصب پلاگین CSS جدید هم می‌شود.
-        run: npm ci --no-optional
+      - name: Clean install dependencies 🔧
+        # حذف کامل node_modules و package-lock.json در محیط CI قبل از نصب مجدد
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          npm cache clean --force
+          npm install --legacy-peer-deps #
 
       - name: Build project 🏗️
         run: npm run build
         env: # این بخش برای تزریق GEMINI_API_KEY به Build اضافه شد.
-          VITE_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} # کلید API را از GitHub Secrets می‌گیرد.
+          VITE_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} #
 
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v4
