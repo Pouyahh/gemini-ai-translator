@@ -16,23 +16,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' #
+          node-version: '20' # از نسخه 20 (LTS) یا بالاتر استفاده کنید
 
       - name: Install dependencies 🔧
-        # npm ci برای نصب تمیزتر در CI
-        run: npm ci
-
-      # مرحله جدید: نصب صریح rollup و پکیج بومی آن برای اطمینان
-      - name: Install Rollup Native Package 🔨
-        run: npm install @rollup/rollup-linux-x64-gnu || npm install rollup
+        # از npm ci --no-optional استفاده کنید تا از باگ مربوط به optional dependencies جلوگیری شود.
+        # این شامل نصب پلاگین CSS جدید هم می‌شود.
+        run: npm ci --no-optional
 
       - name: Build project 🏗️
         run: npm run build
+        env: # این بخش برای تزریق GEMINI_API_KEY به Build اضافه شد.
+          VITE_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} # کلید API را از GitHub Secrets می‌گیرد.
 
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./dist # پوشه خروجی build شما
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
