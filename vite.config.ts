@@ -6,9 +6,9 @@ import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   return {
-    // [G_REASONING] مسیر پایه (base path) برای دیپلوی به GitHub Pages.
-    // [G_REASONING] './' باعث می‌شود Vite مسیرهای Asset را نسبت به index.html محاسبه کند.
-    base: './', 
+    // [G_REASONING] **تنظیم base path صحیح برای GitHub Pages با نام مخزن**
+    // [G_REASONING] این باعث می‌شود تمام مسیرهای Asset به درستی پیشوند /gemini-ai-translator/ را داشته باشند.
+    base: '/gemini-ai-translator/', 
 
     plugins: [
       react(),
@@ -24,9 +24,8 @@ export default defineConfig(({ mode }) => {
       }
     },
     build: {
-      // [G_REASONING] **تنظیمات Build برای خروجی Assetها به صورت استاندارد Vite:**
-      // [G_REASONING] این باعث می‌شود Vite نام فایل‌های Build شده را در index.html تزریق کند.
-      assetsDir: 'assets', // [G_REASONING] فایل‌ها را در پوشه 'assets' داخل 'dist' قرار می‌دهد.
+      // [G_REASONING] Vite به طور پیش‌فرض assetsDir را روی 'assets' تنظیم می‌کند.
+      // [G_REASONING] این تنظیمات خروجی Rollup را برای نام‌گذاری فایل‌ها کنترل می‌کند.
       rollupOptions: {
         output: {
           entryFileNames: `assets/[name]-[hash].js`,
